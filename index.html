@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gooddog – The field guide for dog people</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Ccircle cx='22' cy='22' r='22' fill='%23f3a44d'/%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500..700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (loaded from a CDN so this file works on its own) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: 'DM Sans', sans-serif;
+      --font-display: 'Fraunces', serif;
+    }
+    @layer base {
+      html { scroll-behavior: smooth; }
+      body { margin: 0; min-width: 320px; background: #f7f5ee; font-family: 'DM Sans', sans-serif; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      ::selection { background: #f3a44d; color: #173e34; }
+    }
+    @layer components {
+      .font-display { font-family: 'Fraunces', serif; }
+      .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+      .nav-link { position: relative; padding-block: 0.25rem; }
+      .nav-link::after {
+        position: absolute; right: 0; bottom: 0; left: 0; height: 1px; content: '';
+        background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 220ms ease;
+      }
+      .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+      .button-dark {
+        display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; gap: 0.6rem;
+        border-radius: 999px; background: #173e34; padding: 0.75rem 1.35rem; color: #fffdf7;
+        font-size: 0.875rem; font-weight: 700; transition: transform 180ms ease, background 180ms ease;
+      }
+      .button-dark:hover { background: #225647; transform: translateY(-2px); }
+      .button-light {
+        display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center;
+        border: 1px solid rgb(23 62 52 / 20%); border-radius: 999px; padding: 0.75rem 1.35rem;
+        font-size: 0.875rem; font-weight: 700; transition: background 180ms ease, transform 180ms ease;
+      }
+      .button-light:hover { background: #fffdf7; transform: translateY(-2px); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Reusable icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="paw" viewBox="0 0 44 44" fill="none">
+        <ellipse cx="13" cy="13" rx="5" ry="7" transform="rotate(-28 13 13)" fill="currentColor" />
+        <ellipse cx="31" cy="13" rx="5" ry="7" transform="rotate(28 31 13)" fill="currentColor" />
+        <ellipse cx="7.5" cy="25" rx="4.5" ry="6" transform="rotate(-42 7.5 25)" fill="currentColor" />
+        <ellipse cx="36.5" cy="25" rx="4.5" ry="6" transform="rotate(42 36.5 25)" fill="currentColor" />
+        <path d="M12 31.5C12 24.6 16.6 20 22 20s10 4.6 10 11.5c0 5.3-4.6 7.5-10 7.5s-10-2.2-10-7.5Z" fill="currentColor" />
+      </symbol>
+      <symbol id="arrow" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="search" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+        <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="min-h-screen overflow-hidden bg-[#f7f5ee] text-[#173e34]">
+
+    <!-- NAV -->
+    <nav class="relative z-30 mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <a href="#" class="flex items-center gap-2.5" aria-label="Gooddog home">
+        <span class="grid size-9 place-items-center rounded-full bg-[#f3a44d] text-[#173e34]">
+          <svg class="size-5" aria-hidden="true"><use href="#paw" /></svg>
+        </span>
+        <span class="font-display text-2xl font-bold tracking-[-0.04em]">gooddog</span>
+      </a>
+
+      <div class="hidden items-center gap-8 text-sm font-semibold lg:flex">
+        <a class="nav-link" href="#breeds">Breeds</a>
+        <a class="nav-link" href="#care">Care</a>
+        <a class="nav-link" href="#behavior">Behavior</a>
+        <a class="nav-link" href="#about">About</a>
+      </div>
+
+      <a href="#breeds" class="button-dark hidden sm:inline-flex">
+        <svg class="size-[18px]" aria-hidden="true"><use href="#search" /></svg>
+        Explore breeds
+      </a>
+
+      <button id="menuBtn" class="grid size-11 place-items-center rounded-full border border-[#173e34]/15 sm:hidden" aria-label="Toggle menu" aria-expanded="false">
+        <span class="space-y-1.5">
+          <span class="block h-0.5 w-5 bg-current"></span>
+          <span class="block h-0.5 w-5 bg-current"></span>
+        </span>
+      </button>
+
+      <div id="mobileMenu" class="hidden absolute left-5 right-5 top-[76px] rounded-3xl bg-[#173e34] p-6 text-[#f7f5ee] shadow-2xl sm:hidden">
+        <div class="flex flex-col gap-5 text-lg">
+          <a href="#breeds">Breeds</a>
+          <a href="#care">Care</a>
+          <a href="#behavior">Behavior</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative mx-auto max-w-[1440px] px-5 pb-20 pt-8 sm:px-8 lg:px-14 lg:pb-28 lg:pt-14">
+      <div class="relative z-10 max-w-[790px]">
+        <p class="eyebrow mb-6">The field guide for dog people</p>
+        <h1 class="font-display text-[clamp(4rem,8.5vw,8.4rem)] font-semibold leading-[0.84] tracking-[-0.065em]">
+          Know dogs.
+          <span class="block italic text-[#e46c4c]">Love them better.</span>
+        </h1>
+        <p class="mt-8 max-w-lg text-lg leading-relaxed text-[#173e34]/70 sm:text-xl">
+          Clear, reliable information about dog breeds, behavior, health, and everyday care—made simple for every kind of dog person.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a href="#breeds" class="button-dark group">
+            Browse breed guide
+            <svg class="size-5 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="#arrow" /></svg>
+          </a>
+          <a href="#care" class="button-light">Learn about dog care</a>
+        </div>
+      </div>
+
+      <div class="relative mt-14 h-[480px] sm:h-[560px] lg:absolute lg:right-10 lg:top-0 lg:mt-0 lg:h-[680px] lg:w-[47%]">
+        <div class="absolute inset-x-5 bottom-0 top-8 rotate-[2deg] overflow-hidden rounded-[40%_40%_12%_12%/28%_28%_10%_10%] bg-[#d9d7a8] sm:inset-x-14 lg:inset-x-0">
+          <img
+            src="https://images.unsplash.com/photo-1633722714057-aaa9bf7f2383?auto=format&fit=crop&w=1100&q=90"
+            alt="Golden retriever sitting in a sunny field"
+            class="h-full w-full object-cover object-[center_42%]" />
+        </div>
+        <div class="absolute left-0 top-0 rotate-[-8deg] rounded-full bg-[#f3a44d] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] shadow-sm sm:left-6 sm:top-10">
+          Evidence-led. Dog-approved.
+        </div>
+        <div class="absolute bottom-7 right-0 max-w-48 rotate-[5deg] rounded-2xl bg-[#fffdf7] p-4 shadow-xl sm:right-5">
+          <span class="font-display text-4xl font-bold text-[#e46c4c]">300+</span>
+          <p class="mt-1 text-sm font-semibold leading-tight">recognized dog breeds around the world</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BREEDS -->
+    <section id="breeds" class="bg-[#173e34] px-5 py-20 text-[#f7f5ee] sm:px-8 lg:px-14 lg:py-28">
+      <div class="mx-auto max-w-[1330px]">
+        <div class="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <div>
+            <p class="eyebrow mb-5 text-[#f3a44d]">The breed library</p>
+            <h2 class="font-display text-5xl font-semibold leading-none tracking-[-0.045em] sm:text-7xl">
+              Every breed has <span class="italic">a story.</span>
+            </h2>
+          </div>
+          <p class="max-w-sm text-base leading-relaxed text-[#f7f5ee]/65">
+            Learn about temperament, exercise needs, grooming, health, and history before choosing the right companion for your life.
+          </p>
+        </div>
+
+        <div id="filters" class="mt-10 flex gap-2 overflow-x-auto pb-3"></div>
+        <div id="breedGrid" class="mt-8 grid gap-5 md:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- CARE -->
+    <section id="care" class="bg-[#e6dfa9] px-5 py-20 sm:px-8 lg:px-14 lg:py-28">
+      <div class="mx-auto grid max-w-[1330px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div class="relative min-h-[520px]">
+          <div class="absolute bottom-0 left-0 top-0 w-[85%] overflow-hidden rounded-[2.5rem]">
+            <img
+              src="https://images.unsplash.com/photo-1663340547625-81e31c9acd66?auto=format&fit=crop&w=1000&q=85"
+              alt="Two dogs enjoying time together on a beach"
+              class="h-full w-full object-cover" />
+          </div>
+          <div class="absolute bottom-7 right-0 w-52 rounded-3xl bg-[#e46c4c] p-6 text-[#fffdf7] shadow-xl sm:w-64">
+            <span class="font-display text-6xl font-semibold">30–60</span>
+            <p class="mt-2 text-sm font-semibold leading-snug">minutes of daily exercise suits many adult dogs</p>
+            <p class="mt-4 text-[11px] leading-relaxed text-white/70">Needs vary by age, breed, health, and personality.</p>
+          </div>
+        </div>
+
+        <div class="lg:pl-10">
+          <p class="eyebrow mb-5">Everyday care</p>
+          <h2 class="font-display text-5xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-7xl">
+            The basics of a
+            <span class="block italic text-[#e46c4c]">healthy life.</span>
+          </h2>
+          <p class="mt-7 max-w-lg text-lg leading-relaxed text-[#173e34]/70">
+            Dogs thrive on routine, preventive healthcare, species-appropriate food, physical activity, mental enrichment, and a safe place to rest.
+          </p>
+          <div class="mt-10 divide-y divide-[#173e34]/15 border-y border-[#173e34]/15">
+            <a href="#behavior" class="group flex items-center gap-6 py-5">
+              <span class="text-xs font-bold text-[#e46c4c]">01</span>
+              <span class="flex-1 font-display text-xl font-bold sm:text-2xl">Nutrition &amp; healthy weight</span>
+              <svg class="size-5 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="#arrow" /></svg>
+            </a>
+            <a href="#behavior" class="group flex items-center gap-6 py-5">
+              <span class="text-xs font-bold text-[#e46c4c]">02</span>
+              <span class="flex-1 font-display text-xl font-bold sm:text-2xl">Exercise &amp; enrichment</span>
+              <svg class="size-5 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="#arrow" /></svg>
+            </a>
+            <a href="#behavior" class="group flex items-center gap-6 py-5">
+              <span class="text-xs font-bold text-[#e46c4c]">03</span>
+              <span class="flex-1 font-display text-xl font-bold sm:text-2xl">Grooming &amp; preventive health</span>
+              <svg class="size-5 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="#arrow" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEHAVIOR -->
+    <section id="behavior" class="bg-[#f7f5ee] px-5 py-20 sm:px-8 lg:px-14 lg:py-28">
+      <div class="mx-auto max-w-[1330px]">
+        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p class="eyebrow mb-5">Understanding behavior</p>
+            <h2 class="font-display text-5xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-7xl">
+              Listen to what they <span class="italic text-[#e46c4c]">show you.</span>
+            </h2>
+          </div>
+          <p class="border-l-2 border-[#f3a44d] pl-7 font-display text-2xl leading-snug sm:text-3xl">
+            Behavior is communication. Posture, movement, facial expression, and context all help us understand how a dog feels.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-5 md:grid-cols-2">
+          <article class="group relative min-h-[480px] overflow-hidden rounded-[2rem]">
+            <img
+              src="https://images.unsplash.com/photo-1689202067148-374d2b4d513e?auto=format&fit=crop&w=1200&q=85"
+              alt="Two dogs playing together in a grassy field"
+              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
+            <div class="absolute bottom-0 p-7 text-white sm:p-9">
+              <span class="text-xs font-bold uppercase tracking-[0.14em] text-[#f3a44d]">Body language</span>
+              <h3 class="mt-2 max-w-md font-display text-3xl font-bold leading-tight sm:text-4xl">Play bow or stress signal? Read the whole dog</h3>
+              <p class="mt-3 max-w-md text-sm leading-relaxed text-white/70">A wagging tail alone does not always mean happiness. Look at the speed, height, and the rest of the body.</p>
+            </div>
+          </article>
+
+          <article id="about" class="flex min-h-[480px] flex-col justify-between rounded-[2rem] bg-[#f3a44d] p-8 sm:p-10">
+            <svg class="size-12" aria-hidden="true"><use href="#paw" /></svg>
+            <div>
+              <p class="eyebrow mb-5">Did you know?</p>
+              <p class="max-w-lg font-display text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">
+                A dog's sense of smell can be tens of thousands of times more sensitive than ours.
+              </p>
+              <p class="mt-6 max-w-md text-sm leading-relaxed text-[#173e34]/70">
+                Sniffing is more than investigation—it is enriching mental exercise. A slow “sniff walk” can be deeply satisfying for a dog.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEEP LEARNING -->
+    <section class="bg-[#e46c4c] px-5 py-20 text-[#fffdf7] sm:px-8 lg:px-14">
+      <div class="mx-auto flex max-w-[1100px] flex-col items-center text-center">
+        <svg class="size-11" aria-hidden="true"><use href="#paw" /></svg>
+        <p class="eyebrow mt-6">Keep learning</p>
+        <h2 class="mt-4 max-w-3xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.04em] sm:text-7xl">
+          Better knowledge makes happier dogs.
+        </h2>
+        <a href="#breeds" class="mt-9 inline-flex items-center gap-2 rounded-full bg-[#173e34] px-6 py-3.5 text-sm font-bold">
+          Start exploring <svg class="size-5" aria-hidden="true"><use href="#arrow" /></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#173e34] px-5 pb-8 pt-16 text-[#f7f5ee] sm:px-8 lg:px-14">
+      <div class="mx-auto max-w-[1330px]">
+        <div class="flex flex-col justify-between gap-10 border-b border-white/15 pb-14 md:flex-row md:items-end">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="grid size-9 place-items-center rounded-full bg-[#f3a44d] text-[#173e34]"><svg class="size-5" aria-hidden="true"><use href="#paw" /></svg></span>
+              <span class="font-display text-3xl font-bold">gooddog</span>
+            </div>
+            <p class="mt-5 max-w-sm text-sm leading-relaxed text-white/55">Practical, friendly information for people who want to understand dogs and care for them well.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-x-12 gap-y-3 text-sm font-semibold">
+            <a href="#breeds">Breed guide</a>
+            <a href="#care">Dog care</a>
+            <a href="#behavior">Behavior</a>
+            <a href="#about">About us</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 pt-7 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2025 Gooddog. Information for dog people everywhere.</p>
+          <p>Educational content is not a substitute for veterinary advice.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("hidden") === false;
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+    mobileMenu.querySelectorAll("a").forEach(a =>
+      a.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        menuBtn.setAttribute("aria-expanded", "false");
+      })
+    );
+
+    // Breed library with size filters
+    const breeds = [
+      { name: "Beagle", group: "Hound", size: "Medium", lifespan: "10–15 years", trait: "Curious & merry",
+        image: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=900&q=85" },
+      { name: "Golden Retriever", group: "Sporting", size: "Large", lifespan: "10–12 years", trait: "Friendly & devoted",
+        image: "https://images.unsplash.com/photo-1633722715463-d30f4f325e24?auto=format&fit=crop&w=900&q=85" },
+      { name: "Jack Russell Terrier", group: "Terrier", size: "Small", lifespan: "13–16 years", trait: "Bright & energetic",
+        image: "https://images.unsplash.com/photo-1602308006427-f1c718609718?auto=format&fit=crop&w=900&q=85" }
+    ];
+    const filterNames = ["All breeds", "Small", "Medium", "Large"];
+    let active = "All breeds";
+
+    const activeCls = "bg-[#f3a44d] text-[#173e34]";
+    const idleCls = "border border-white/20 text-white/75 hover:border-white/50 hover:text-white";
+
+    function renderFilters() {
+      const box = document.getElementById("filters");
+      box.innerHTML = "";
+      filterNames.forEach(f => {
+        const b = document.createElement("button");
+        b.textContent = f;
+        b.className = "shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition " + (f === active ? activeCls : idleCls);
+        b.addEventListener("click", () => { active = f; renderFilters(); renderBreeds(); });
+        box.appendChild(b);
+      });
+    }
+
+    function renderBreeds() {
+      const list = active === "All breeds" ? breeds : breeds.filter(b => b.size === active);
+      document.getElementById("breedGrid").innerHTML = list.map(b => `
+        <article class="group overflow-hidden rounded-[2rem] bg-[#f7f5ee] text-[#173e34]">
+          <div class="relative h-[340px] overflow-hidden sm:h-[400px]">
+            <img src="${b.image}" alt="${b.name}" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            <span class="absolute left-4 top-4 rounded-full bg-white/85 px-4 py-2 text-xs font-bold uppercase tracking-wider backdrop-blur">${b.group}</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-display text-3xl font-bold leading-none tracking-[-0.03em]">${b.name}</h3>
+              <svg class="mt-1 size-6 shrink-0 text-[#e46c4c] transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="#arrow" /></svg>
+            </div>
+            <p class="mt-2 text-sm font-semibold text-[#e46c4c]">${b.trait}</p>
+            <div class="mt-5 flex gap-6 border-t border-[#173e34]/10 pt-4 text-xs text-[#173e34]/60">
+              <span><b class="block text-[#173e34]">Size</b>${b.size}</span>
+              <span><b class="block text-[#173e34]">Lifespan</b>${b.lifespan}</span>
+            </div>
+          </div>
+        </article>`).join("");
+    }
+
+    renderFilters();
+    renderBreeds();
+  </script>
+</body>
+</html>
